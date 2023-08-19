@@ -32,12 +32,19 @@ defmodule ReproLineFill.Scene.Home do
 
     info = "scenic: v#{scenic_ver}\nscenic_driver_local: v#{driver_ver}"
 
+    graph = Graph.build(font: :roboto, font_size: @text_size, fill: :white)
+
+    # If you uncomment the line below then the line will render
+    # graph = Graph.build(font: :roboto, font_size: @text_size)
+
     graph =
-      Graph.build(font: :roboto, font_size: @text_size)
+      graph
       |> add_specs_to_graph([
         text_spec(info, translate: {20, 40}),
         text_spec(@note, translate: {20, 120}),
-        rect_spec({width, height})
+	# This only renders if there's no fill set on the graph
+        line_spec({{0, 400}, {450, 400}}, stroke: {4, :red}),
+        rect_spec({width, height}, fill: :transparent)
       ])
 
     scene = push_graph(scene, graph)
